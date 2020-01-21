@@ -22,5 +22,11 @@ namespace pruebaGoogleCalendar.Controllers
             al= new AlumnoRepository().ObtenerAlumnos(id);
            return Json(al, JsonRequestBehavior.AllowGet); 
         }
+        public JsonResult BorrarUsuario(int id)
+        {
+            List<Alumno> al;
+            al = new AlumnoRepository().BorrarAlumno(id);
+            return Json(al, JsonRequestBehavior.AllowGet);
+        }
     }
 }

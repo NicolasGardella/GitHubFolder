@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Astral by HTML5 UP</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="~/assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <link href="~/assets/css/calendar-css/responsive-calendar.css" rel="stylesheet">
+
+</head>
+<body>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>*@
+    <nav id="nav">
+        <a href="#" class="icon solid fa-home"><span>Home</span></a>
+        <a href="~/Home/Agenda" class="icon solid fa-calendar"><span>Work</span></a>
+        <a href="#contact" class="icon solid fa-envelope"><span>Contact</span></a>
+        <a href="https://twitter.com/ajlkn" class="icon brands fa-twitter"><span>Twitter</span></a>
+        @*<ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+            </ul>
+            @Html.Partial("_LoginPartial")*@
+    </nav>
+
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+        </footer>
+    </div>
+
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/assets/js/calendar-js/responsive-calendar.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function addLeadingZero(num) {
+                if (num < 10) {
+                    return "0" + num;
+                } else {
+                    return "" + num;
+                }
+            }
+            $(".responsive-calendar").responsiveCalendar({
+                onInit: function (e) {
+                    debugger;
+                },
+                onDayClick: function (events) {
+                    var thisDayEvent, key;
+
+                    key = addLeadingZero($(this).data('month')) + '-' + addLeadingZero($(this).data('day')) + '-' + $(this).data('year');
+                    thisDayEvent = events[key];
+                    //alert(thisDayEvent.number);
+                    alert(key);
+                    console.log(key);
+                    debugger;
+                }
+                 //   ,
+
+                //time: '2013-05',
+                //events: {
+                //    "2013-04-30": { "number": 5, "url": "http://w3widgets.com/responsive-slider" },
+                //    "2013-04-26": { "number": 1, "url": "http://w3widgets.com" },
+                //    "2013-05-03": { "number": 1 },
+                //    "2013-06-12": {}
+                //}
+            });
+        });
+    </script>
+</body>
+</html>

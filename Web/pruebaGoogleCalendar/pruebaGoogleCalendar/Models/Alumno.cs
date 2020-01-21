@@ -29,8 +29,11 @@ namespace pruebaGoogleCalendar.Models
         [Required]
         public float ingresos { get; set; }
 
+        [Required]
+        public int estado { get; set; }
 
-        public Alumno(int id,string nombre, string apellido, string telefono, string mail, string comentarios, float horasEstudiadas, float ingresos)
+
+        public Alumno(int id,string nombre, string apellido, string telefono, string mail, string comentarios, float horasEstudiadas, float ingresos, int estado)
         {
             this.idAlumno = id;
             this.nombre = nombre;
@@ -40,6 +43,7 @@ namespace pruebaGoogleCalendar.Models
             this.comentarios = comentarios;
             this.horasEstudiadas = horasEstudiadas;
             this.ingresos = ingresos;
+            this.estado = estado;
 
         }
     }

@@ -38,6 +38,37 @@ namespace pruebaGoogleCalendar.Persistencia
                 throw new Exception(ex.Message);
             }
         }
+
+        public List<Alumno> BorrarAlumno(int id)
+        {
+            Conn c = new Conn(ConfigurationManager.ConnectionStrings["bbdd"].ConnectionString);
+            DataTable dt = new DataTable();
+            StringBuilder qry = new StringBuilder();
+            try
+            {
+                qry.AppendFormat("exec sp_delAlumno {0}", id);
+
+
+                dt = c.GetTable(qry.ToString());
+                if (dt.Rows.Count > 0)
+                {
+                    List<Alumno> alumnos = PopulateList(dt);
+                    c.Close();
+                    return alumnos;
+                }
+                else
+                {
+                    c.Close();
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                c.Close();
+                throw new Exception(ex.Message);
+            }
+        }
+
         private static Alumno PopulateEntity(DataRow row)
         {
             Entidades e = new Entidades();
@@ -49,7 +80,8 @@ namespace pruebaGoogleCalendar.Persistencia
                 mail: e.GetString(row, "mail"),
                 comentarios: e.GetString(row, "comentarios"),
                 horasEstudiadas: e.GetFloat(row, "horasEstudiadas"),
-                ingresos: e.GetFloat(row, "ingresos")
+                ingresos: e.GetFloat(row, "ingresos"),
+                estado: e.GetInt(row, "estado")
                 );
             return al;
         }
