@@ -1,99 +1,103 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Astral by HTML5 UP</title>
+    <title>La Cocina de Fanny</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="~/assets/css/main.css" />
+    <link href="~/assets/css/fontawesome-all.min.css" rel="stylesheet" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    <script src="https://apis.google.com/js/api:client.js"></script>
     <link href="~/assets/css/calendar-css/responsive-calendar.css" rel="stylesheet">
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="460338197016-7mh7rqm0uufpotjvo7r5oh95h4g07spv.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/client:platform.js?onload=init" async defer></script>
+    <style type="text/css">
+        #customBtn {
+            display: inline-block;
+            background: white;
+            color: #444;
+            width: 190px;
+            border-radius: 5px;
+            border: thin solid #888;
+            box-shadow: 1px 1px 1px grey;
+            white-space: nowrap;
+        }
 
+        .ingVerde {
+            color: #2af306 !important;
+        }
+
+            .ingVerde:hover {
+                color: #f30606 !important;
+            }
+
+        #customBtn:hover {
+            cursor: pointer;
+        }
+
+        span.label {
+            font-family: serif;
+            font-weight: normal;
+        }
+
+        span.icon {
+            background: url('/identity/sign-in/g-normal.png') transparent 5px 50% no-repeat;
+            display: inline-block;
+            vertical-align: middle;
+            width: 42px;
+            height: 42px;
+        }
+
+        span.buttonText {
+            display: inline-block;
+            vertical-align: middle;
+            padding-left: 42px;
+            padding-right: 42px;
+            font-size: 14px;
+            font-weight: bold;
+            /* Use the Roboto font that is loaded in the <head> */
+            font-family: 'Roboto', sans-serif;
+        }
+          html {
+            overflow: scroll;
+            overflow-x: hidden;
+        }
+
+       ::-webkit-scrollbar {
+            width: 0px;  /*Remove scrollbar space*/ 
+            background: transparent; /*Optional: just make scrollbar invisible*/ 
+        }
+        /*Optional: show position indicator in red*/ 
+        ::-webkit-scrollbar-thumb {
+            background: #FF0000;
+        }
+    </style>
 </head>
 <body>
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
-                </div>
-            </div>
-        </div>*@
+
     <nav id="nav">
-        <a href="#" class="icon solid fa-home"><span>Home</span></a>
-        <a href="~/Home/Agenda" class="icon solid fa-calendar"><span>Work</span></a>
+        @*<a href="#" class="icon solid fas fa-igloo"><span>Home</span></a>*@
+        <a href="~/Home/Agenda" id="menuAgenda" class="icon solid fa-calendar"><span>Calendario</span></a>
         <a href="#contact" class="icon solid fa-envelope"><span>Contact</span></a>
-        <a href="https://twitter.com/ajlkn" class="icon brands fa-twitter"><span>Twitter</span></a>
-        @*<ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-            </ul>
-            @Html.Partial("_LoginPartial")*@
+        <a onclick="startApp()" id="menuIngreso" class="icon solid fas fa-user-astronaut"><span id="spanIngresar" style="width:auto">Ingresar</span></a>
     </nav>
-
-
 
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+            <p>&copy; @DateTime.Now.Year - La Cocina de Fanny - Clases particulares / Apoyo Escolar</p>
         </footer>
     </div>
 
 
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    <script src="~/assets/js/calendar-js/responsive-calendar.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            function addLeadingZero(num) {
-                if (num < 10) {
-                    return "0" + num;
-                } else {
-                    return "" + num;
-                }
-            }
-            $(".responsive-calendar").responsiveCalendar({
-                onInit: function (e) {
-                    debugger;
-                },
-                onDayClick: function (events) {
-                    var thisDayEvent, key;
-
-                    key = addLeadingZero($(this).data('month')) + '-' + addLeadingZero($(this).data('day')) + '-' + $(this).data('year');
-                    thisDayEvent = events[key];
-                    //alert(thisDayEvent.number);
-                    alert(key);
-                    console.log(key);
-                    debugger;
-                }
-                 //   ,
-
-                //time: '2013-05',
-                //events: {
-                //    "2013-04-30": { "number": 5, "url": "http://w3widgets.com/responsive-slider" },
-                //    "2013-04-26": { "number": 1, "url": "http://w3widgets.com" },
-                //    "2013-05-03": { "number": 1 },
-                //    "2013-06-12": {}
-                //}
-            });
-        });
-    </script>
+    @*<script src="~/assets/js/calendar-js/responsive-calendar.js"></script>*@
+    <script src="~/Scripts/Components/_menu.js"></script>
 </body>
 </html>

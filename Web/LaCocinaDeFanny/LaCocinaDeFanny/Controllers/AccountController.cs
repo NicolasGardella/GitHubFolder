@@ -58,6 +58,7 @@ namespace LaCocinaDeFanny.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+           // var authProviders = HttpContext.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
             return View();
         }
 

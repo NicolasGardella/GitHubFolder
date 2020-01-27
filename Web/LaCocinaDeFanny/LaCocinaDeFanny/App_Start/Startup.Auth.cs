@@ -11,6 +11,8 @@ namespace LaCocinaDeFanny
 {
     public partial class Startup
     {
+
+
         // Para obtener más información sobre cómo configurar la autenticación, visite https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
@@ -58,11 +60,11 @@ namespace LaCocinaDeFanny
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "929017837921-845fdcuaufhlf71s6oeojtfre5j7s5c4.apps.googleusercontent.com",
+                ClientSecret = "0XRLd16rfCfGta3TZZUZ0YuU"
+            });
         }
     }
 }

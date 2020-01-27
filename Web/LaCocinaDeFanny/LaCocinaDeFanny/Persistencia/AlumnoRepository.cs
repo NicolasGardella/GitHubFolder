@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Net.Mail;
 using System.Text;
 
 namespace LaCocinaDeFanny.Persistencia
@@ -39,7 +40,36 @@ namespace LaCocinaDeFanny.Persistencia
                 throw new Exception(ex.Message);
             }
         }
+        public Alumno CrearAlumno(string nombre, string apellido, string mail, string comentarios)
+        {
+            Conn c = new Conn(ConfigurationManager.ConnectionStrings["bbdd"].ConnectionString);
+            DataTable dt = new DataTable();
+            StringBuilder qry = new StringBuilder();
+            try
+            {
+                qry.AppendFormat("exec sp_crearAlumno '{0}','{1}','{2}','{3}','{4}'", nombre,apellido,"",mail,comentarios);
 
+
+                dt = c.GetTable(qry.ToString());
+                if (dt.Rows.Count > 0)
+                {
+
+                    Alumno alumno = PopulateEntity(dt.Rows[0]);
+                    c.Close();
+                    return alumno;
+                }
+                else
+                {
+                    c.Close();
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                c.Close();
+                throw new Exception(ex.Message);
+            }
+        }
         public List<Alumno> BorrarAlumno(int id)
         {
             Conn c = new Conn(ConfigurationManager.ConnectionStrings["bbdd"].ConnectionString);
@@ -84,6 +114,16 @@ namespace LaCocinaDeFanny.Persistencia
                 ingresos: e.GetFloat(row, "ingresos"),
                 estado: e.GetInt(row, "estado")
                 );
+            if (e.GetString(row, "notificar")=="nuevo")
+            {
+              /*  Correos c = new Correos();
+                MailMessage mm = new MailMessage();
+                mm.Body = "Prueba de nuevo alumno. Nombre: " + al.nombre;
+                mm.To.Add(new MailAddress("nicolasgardella@gmail.com"));
+                mm.Subject = "Prueba Notificacion";
+                mm.From = new MailAddress("nico_gardella@gmail.com");
+                c.MandarCorreo(mm);*/
+            }
             return al;
         }
         private static List<Alumno> PopulateList(DataTable dt)

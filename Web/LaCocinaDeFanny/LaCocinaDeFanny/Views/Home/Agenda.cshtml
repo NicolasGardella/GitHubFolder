@@ -18,24 +18,28 @@
     <!-- Respomsive slider -->
     @*<link href="../css/responsive-calendar.css" rel="stylesheet">*@
     <link href="~/assets/css/calendar-css/responsive-calendar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
 </head>
 <body>
-    <div class="container jumbotron">
+    <div class="container jumbotron" style="width:50%;background:#ebb3a2;opacity:0.8">
         <!-- Responsive calendar - START -->
         <div class="responsive-calendar">
             <div class="controls">
-                <a class="pull-left" data-go="prev"><div class="btn btn-primary">Prev</div></a>
+                <a class="pull-left" data-go="prev"><div class="btn btn-primary">Anterior</div></a>
                 <h4><span data-head-year></span> <span data-head-month></span></h4>
-                <a class="pull-right" data-go="next"><div class="btn btn-primary">Next</div></a>
+                <a class="pull-right" data-go="next"><div class="btn btn-primary">Siguiente</div></a>
             </div><hr />
             <div class="day-headers">
+                <div class="day header">Dom</div>
                 <div class="day header">Lun</div>
                 <div class="day header">Mar</div>
                 <div class="day header">Mie</div>
                 <div class="day header">Jue</div>
                 <div class="day header">Vie</div>
                 <div class="day header">Sab</div>
-                <div class="day header">Dom</div>
             </div>
             <div class="days" data-group="days">
 
@@ -51,28 +55,92 @@
 
 </body>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
-</button>
+
 
 <!-- Modal -->
-<div class="modal" tabindex="-1" id="exampleModal" role="dialog">
+<div class="modal" tabindex="-1" id="reservaModal" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h3 style="margin:auto;" class="modal-title" id="diaReserva"> </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
+
+            <div class="form-group" style="margin:15px">
+
+                <select style="width:auto!important" class="form-control" id="tdClase">
+                    <option>Seleccione el tipo de clase</option>
+                    <option value="1">Particular</option>
+                    <option value="2">En Grupo</option>
+                </select>
+            </div>
+
+            <div class="modal-body" style="display:none">
+                <input class="timepicker">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+
+
             </div>
         </div>
     </div>
+</div>
+
+
+<div class="modal" tabindex="-1" id="mpModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form action="/procesar_pago" method="post" id="pay" name="pay">
+            <fieldset>
+                <div>
+                    <ul style="list-style:none;">
+                        <li>
+                            <label style="float:left" for="email">Email</label>
+                            <input style="float:right;margin-bottom:5px;" type="email" id="email" name="email" value="test_user_19653727@testuser.com" placeholder="your email" />
+                        </li>
+
+                        <li>
+                            <label style="float:left" for="cardNumber">Credit card number:</label>
+                            <input style="float:right;margin-bottom:5px;" type="text" id="cardNumber" data-checkout="cardNumber" placeholder="4509 9535 6623 3704" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off />
+                        </li>
+                        <li>
+                            <label style="float:left" for="securityCode">Security code:</label>
+                            <input style="float:right;margin-bottom:5px;" type="text" id="securityCode" data-checkout="securityCode" placeholder="123" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off />
+                        </li>
+                        <li>
+                            <label style="float:left" for="cardExpirationMonth">Expiration month:</label>
+                            <input style="float:right;margin-bottom:5px;" type="text" id="cardExpirationMonth" data-checkout="cardExpirationMonth" placeholder="11" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off />
+                        </li>
+                        <li>
+                            <label style="float:left" for="cardExpirationYear">Expiration year:</label>
+                            <input style="float:right;margin-bottom:5px;" type="text" id="cardExpirationYear" data-checkout="cardExpirationYear" placeholder="2025" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off />
+                        </li>
+                        <li>
+                            <label style="float:left" for="cardholderName">Card holder name:</label>
+                            <input style="float:right;margin-bottom:5px;" type="text" id="cardholderName" data-checkout="cardholderName" placeholder="APRO" />
+                        </li>
+                        <li>
+                            <label style="float:left" for="docType">Document type:</label>
+                            <select style="float:right;margin-bottom:5px;" id="docType" data-checkout="docType"></select>
+                        </li>
+                        <li>
+                            <label style="float:left" for="docNumber">Document number:</label>
+                            <input style="float:right;margin-bottom:5px;" type="text" id="docNumber" data-checkout="docNumber" placeholder="12345678" />
+                        </li>
+                        <li>
+                            <label style="float:left" for="installments">Installments:</label>
+                            <select style="float:right;margin-bottom:5px;" id="installments" class="form-control" name="installments"></select>
+                        </li>
+                    </ul>
+                </div>
+                <div style="margin-top:80%;">
+                    <input type="hidden" name="amount" id="amount" />
+                    <input type="hidden" name="description" />
+                    <input type="hidden" name="paymentMethodId" />
+                    <input type="submit" value="Pay!" />
+                </div>
+    </fieldset>
+    </form>
+</div>
 </div>

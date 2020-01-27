@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using LaCocinaDeFanny.Persistencia;
+using System;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,6 +9,7 @@ namespace LaCocinaDeFanny.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
+
         public ActionResult Index()
         {
             return View();
@@ -21,7 +21,12 @@ namespace LaCocinaDeFanny.Controllers
 
             return View();
         }
-
+        [Authorize]
+        public ActionResult ProtectedPage()
+        {
+            ViewBag.UserName = HttpContext.GetOwinContext().Authentication.User.Identity.Name;
+            return View();
+        }
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -30,8 +35,7 @@ namespace LaCocinaDeFanny.Controllers
         }
         public ActionResult Agenda()
         {
-            ViewBag.Message = "Your contact page.";
-
+            new ClaseRepository().CrearClase(new DateTime(2020,01,27,11,00,00),new TimeSpan(2,0,0),int.Parse(Session["id"].ToString()),100,0,1,"","Fisica");
             return View();
         }
     }

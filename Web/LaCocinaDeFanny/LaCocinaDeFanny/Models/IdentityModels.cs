@@ -25,9 +25,6 @@ namespace LaCocinaDeFanny.Models
         {
         }
 
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
+        public static ApplicationDbContext Create() => new ApplicationDbContext();
     }
 }

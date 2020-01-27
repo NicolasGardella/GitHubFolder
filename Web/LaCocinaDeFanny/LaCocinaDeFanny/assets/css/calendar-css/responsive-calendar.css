@@ -25,7 +25,7 @@
   padding: 20% 0 20% 0;
 }
 .responsive-calendar .day a:hover {
-  background-color: #eee;
+  /*background-color: #eee;*/
   text-decoration: none;
 }
 .responsive-calendar .day.header {
@@ -53,4 +53,31 @@
   top: 2px;
   right: 2px;
   z-index: 1;
+}
+.dom a,
+.sab a,
+.past a {
+    background-color: #98685c !important;
+    cursor: not-allowed !important;
+    font-weight:bold;
+}
+/*.future a {   
+    cursor: not-allowed !important;
+}*/
+.day {
+    border: 1px gray solid;
+}
+.past{
+    display:none!important
+}
+#mpModal {
+    width: auto;
+    top: 10% !important;
+    bottom: 15% !important;
+    background-color: #98685c !important;
+    left: 30% !important;
+    right: 30% !important;
+}
+li {
+    margin:10px;
 }
